@@ -1,0 +1,34 @@
+configuration:
+  target_hostname:
+    name: Target hostname or IP
+    description: Hostname or IPv4 address the Bose speakers can reach. Do not include a scheme or port.
+  mgmt_username:
+    name: Management username
+    description: Username used by the upstream management endpoints.
+  mgmt_password:
+    name: Management password
+    description: Password used by the upstream management endpoints.
+  preferred_devices:
+    name: Preferred devices
+    description: Optional upstream preferred-device list, for example Living Room@192.168.1.10;Kitchen@192.168.1.11.
+  base_url:
+    name: External base URL
+    description: Optional external base URL for reverse proxies or OAuth callbacks.
+  discovery_interval:
+    name: Discovery interval
+    description: How often AfterTouch scans for speakers.
+  discovery_timeout:
+    name: Discovery timeout
+    description: Timeout used while discovering speakers.
+  upnp_enabled:
+    name: Enable UPnP
+    description: Enables upstream UPnP-based discovery features.
+  record_interactions:
+    name: Record interactions
+    description: Stores interaction history for troubleshooting and migration checks.
+  redact_proxy_logs:
+    name: Redact proxy logs
+    description: Removes sensitive values from logs.
+  log_proxy_body:
+    name: Log proxy body
+    description: Logs proxy payloads. Leave off unless you are debugging.
