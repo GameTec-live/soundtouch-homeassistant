@@ -5,7 +5,7 @@ CONFIG_PATH=/data/options.json
 CONFIG_JSON=
 
 DEFAULT_CONFIG_JSON='{
-  "target_hostname": "homeassistant.local",
+  "target_hostname": null,
   "mgmt_username": "admin",
   "mgmt_password": "change_me!",
   "preferred_devices": "",
@@ -56,9 +56,9 @@ get_bool() {
 
 load_config
 
-TARGET_HOSTNAME="$(get_string target_hostname)"
-MGMT_USERNAME="$(get_string mgmt_username)"
-MGMT_PASSWORD="$(get_string mgmt_password)"
+TARGET_HOSTNAME="$(get_string target_hostname || true)"
+MGMT_USERNAME="$(get_string mgmt_username || true)"
+MGMT_PASSWORD="$(get_string mgmt_password || true)"
 
 if [ -z "$TARGET_HOSTNAME" ]; then
   echo "target_hostname must not be empty" >&2
@@ -84,8 +84,8 @@ fi
 
 PREFERRED_DEVICES="$(get_string preferred_devices || true)"
 BASE_URL="$(get_string base_url || true)"
-DISCOVERY_INTERVAL="$(get_string discovery_interval)"
-DISCOVERY_TIMEOUT="$(get_string discovery_timeout)"
+DISCOVERY_INTERVAL="$(get_string discovery_interval || true)"
+DISCOVERY_TIMEOUT="$(get_string discovery_timeout || true)"
 UPNP_ENABLED="$(get_bool upnp_enabled)"
 RECORD_INTERACTIONS="$(get_bool record_interactions)"
 REDACT_PROXY_LOGS="$(get_bool redact_proxy_logs)"

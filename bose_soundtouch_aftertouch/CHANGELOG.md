@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.72.0-9
+
+- Renamed the Home Assistant wrapper version back into the `0.72.x` line
+- Kept the upstream image pinned to `ghcr.io/gesellix/bose-soundtouch:0.72.0`
+
+## 0.72.0-8
+
+- Fixed startup handling for `null`/missing required options so validation errors are explicit
+
+## 0.72.0-7
+
+- Set `init: false` as required by the official Home Assistant app docs for custom images with their own init/entrypoint
+- Removed the default `target_hostname` so users must explicitly set a LAN-reachable host value in Home Assistant
+
 ## 0.72.0-6
 
 - Removed the remaining hard dependency on `/data/options.json` during startup
