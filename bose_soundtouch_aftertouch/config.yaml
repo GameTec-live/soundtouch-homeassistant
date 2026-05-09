@@ -4,7 +4,7 @@ slug: bose_soundtouch_aftertouch
 description: >-
   Run the Bose SoundTouch AfterTouch service on Home Assistant to keep
   SoundTouch speakers working after the Bose cloud shutdown.
-url: https://gesellix.github.io/Bose-SoundTouch/
+url: https://github.com/GameTec-live/soundtouch-homeassistant
 startup: services
 backup: cold
 boot: auto
