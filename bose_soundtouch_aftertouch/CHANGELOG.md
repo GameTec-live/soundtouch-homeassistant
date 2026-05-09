@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.72.0-5
+
+- Added a Supervisor API fallback for app options when `/data/options.json` is not present at startup
+- Added default option generation as a last-resort startup fallback
+
 ## 0.72.0-4
 
 - Fixed Home Assistant options loading by restoring the default `/data` add-on mount

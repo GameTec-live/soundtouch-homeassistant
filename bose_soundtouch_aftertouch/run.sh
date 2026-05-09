@@ -3,6 +3,49 @@ set -eu
 
 CONFIG_PATH=/data/options.json
 
+write_default_config() {
+  cat >"$CONFIG_PATH" <<'EOF'
+{
+  "target_hostname": "homeassistant.local",
+  "mgmt_username": "admin",
+  "mgmt_password": "change_me!",
+  "preferred_devices": "",
+  "base_url": "",
+  "discovery_interval": "5m",
+  "discovery_timeout": "5s",
+  "upnp_enabled": true,
+  "record_interactions": true,
+  "redact_proxy_logs": true,
+  "log_proxy_body": false
+}
+EOF
+}
+
+ensure_config() {
+  if [ -s "$CONFIG_PATH" ]; then
+    return
+  fi
+
+  mkdir -p /data
+
+  if [ -n "${SUPERVISOR_TOKEN:-}" ]; then
+    RESPONSE_FILE="$(mktemp)"
+    if curl -fsS \
+      -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" \
+      http://supervisor/addons/self/info \
+      >"$RESPONSE_FILE"; then
+      if jq -e '.data.options // .options' "$RESPONSE_FILE" >"$CONFIG_PATH"; then
+        rm -f "$RESPONSE_FILE"
+        return
+      fi
+    fi
+    rm -f "$RESPONSE_FILE"
+  fi
+
+  echo "Warning: /data/options.json is missing and Supervisor options could not be loaded; using defaults." >&2
+  write_default_config
+}
+
 get_string() {
   jq -er --arg key "$1" '.[$key] // empty' "$CONFIG_PATH"
 }
@@ -10,6 +53,8 @@ get_string() {
 get_bool() {
   jq -er --arg key "$1" '.[$key]' "$CONFIG_PATH"
 }
+
+ensure_config
 
 TARGET_HOSTNAME="$(get_string target_hostname)"
 MGMT_USERNAME="$(get_string mgmt_username)"

@@ -4,7 +4,7 @@ FROM ghcr.io/gesellix/bose-soundtouch:${UPSTREAM_VERSION}
 ARG BUILD_ARCH
 ARG BUILD_VERSION
 
-RUN apk add --no-cache jq
+RUN apk add --no-cache curl jq
 
 COPY run.sh /run.sh
 RUN chmod a+x /run.sh
