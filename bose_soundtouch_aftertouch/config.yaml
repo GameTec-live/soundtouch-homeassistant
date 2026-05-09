@@ -1,5 +1,5 @@
 name: Bose SoundTouch AfterTouch
-version: "0.72.0-5"
+version: "0.72.0-6"
 slug: bose_soundtouch_aftertouch
 description: >-
   Run the Bose SoundTouch AfterTouch service on Home Assistant to keep
@@ -18,6 +18,9 @@ arch:
   - aarch64
   - amd64
   - armv7
+map:
+  - type: data
+    path: /data
 options:
   target_hostname: homeassistant.local
   mgmt_username: admin

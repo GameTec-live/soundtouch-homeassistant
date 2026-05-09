@@ -2,10 +2,9 @@
 set -eu
 
 CONFIG_PATH=/data/options.json
+CONFIG_JSON=
 
-write_default_config() {
-  cat >"$CONFIG_PATH" <<'EOF'
-{
+DEFAULT_CONFIG_JSON='{
   "target_hostname": "homeassistant.local",
   "mgmt_username": "admin",
   "mgmt_password": "change_me!",
@@ -17,12 +16,11 @@ write_default_config() {
   "record_interactions": true,
   "redact_proxy_logs": true,
   "log_proxy_body": false
-}
-EOF
-}
+}'
 
-ensure_config() {
+load_config() {
   if [ -s "$CONFIG_PATH" ]; then
+    CONFIG_JSON="$(cat "$CONFIG_PATH")"
     return
   fi
 
@@ -34,7 +32,8 @@ ensure_config() {
       -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" \
       http://supervisor/addons/self/info \
       >"$RESPONSE_FILE"; then
-      if jq -e '.data.options // .options' "$RESPONSE_FILE" >"$CONFIG_PATH"; then
+      if CONFIG_JSON="$(jq -cer '.data.options // .options' "$RESPONSE_FILE")"; then
+        printf '%s\n' "$CONFIG_JSON" >"$CONFIG_PATH" 2>/dev/null || true
         rm -f "$RESPONSE_FILE"
         return
       fi
@@ -42,19 +41,20 @@ ensure_config() {
     rm -f "$RESPONSE_FILE"
   fi
 
-  echo "Warning: /data/options.json is missing and Supervisor options could not be loaded; using defaults." >&2
-  write_default_config
+  echo "Warning: app options could not be loaded from /data/options.json or Supervisor API; using defaults." >&2
+  CONFIG_JSON="$DEFAULT_CONFIG_JSON"
+  printf '%s\n' "$CONFIG_JSON" >"$CONFIG_PATH" 2>/dev/null || true
 }
 
 get_string() {
-  jq -er --arg key "$1" '.[$key] // empty' "$CONFIG_PATH"
+  printf '%s' "$CONFIG_JSON" | jq -er --arg key "$1" '.[$key] // empty'
 }
 
 get_bool() {
-  jq -er --arg key "$1" '.[$key]' "$CONFIG_PATH"
+  printf '%s' "$CONFIG_JSON" | jq -er --arg key "$1" '.[$key]'
 }
 
-ensure_config
+load_config
 
 TARGET_HOSTNAME="$(get_string target_hostname)"
 MGMT_USERNAME="$(get_string mgmt_username)"

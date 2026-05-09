@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.72.0-6
+
+- Removed the remaining hard dependency on `/data/options.json` during startup
+- Added an explicit Home Assistant `data` mount at `/data` for clearer persistence behavior
+
 ## 0.72.0-5
 
 - Added a Supervisor API fallback for app options when `/data/options.json` is not present at startup
