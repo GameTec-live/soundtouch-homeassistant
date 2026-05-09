@@ -48,7 +48,7 @@ LOG_PROXY_BODY="$(get_bool log_proxy_body)"
 
 export PORT=8000
 export HTTPS_PORT=8443
-export DATA_DIR=/app/data
+export DATA_DIR=/data/aftertouch
 export SERVER_URL="http://${TARGET_HOSTNAME}:8000"
 export HTTPS_SERVER_URL="https://${TARGET_HOSTNAME}:8443"
 export SOUNDTOUCH_HOSTNAME="${TARGET_HOSTNAME}"
@@ -69,7 +69,7 @@ if [ -n "${BASE_URL}" ]; then
   export BASE_URL
 fi
 
-mkdir -p /app/data
+mkdir -p "$DATA_DIR"
 
 if [ "$MGMT_PASSWORD" = "change_me!" ]; then
   echo "Warning: mgmt_password is still set to the default value." >&2

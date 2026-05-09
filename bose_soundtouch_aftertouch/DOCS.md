@@ -51,7 +51,7 @@ The upstream migration guide recommends XML redirect first for testing, and DNS/
 
 ## Operational notes
 
-- The add-on persists all upstream data in the Home Assistant add-on data directory mapped to `/app/data`.
+- The add-on persists all upstream data in the Home Assistant add-on data directory under `/data/aftertouch`.
 - The upstream docs note that `data/settings.json` overrides environment variables after you change settings in the web UI.
 - If `target_hostname` is wrong, migration checks in the AfterTouch UI will fail because speakers cannot reach the service.
 - If port `53`, `8000`, or `8443` is already in use on the Home Assistant host, the add-on cannot start correctly.

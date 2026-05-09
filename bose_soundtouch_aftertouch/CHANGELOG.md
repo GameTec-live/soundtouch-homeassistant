@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.72.0-4
+
+- Fixed Home Assistant options loading by restoring the default `/data` add-on mount
+- Moved upstream AfterTouch state into `/data/aftertouch` inside the add-on
+
+## 0.72.0-3
+
+- Added `armv7` back for 32-bit Raspberry Pi/Home Assistant installs that still need it
+- Kept `aarch64` for supported Raspberry Pi 4/5 64-bit installs
+
 ## 0.72.0-2
 
 - Fixed Home Assistant `webui` placeholder syntax so Supervisor accepts the app metadata
