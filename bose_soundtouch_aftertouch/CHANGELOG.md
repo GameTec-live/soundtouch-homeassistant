@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.72.0-11
+
+- Rebased the wrapper onto the official Home Assistant base image and copied in the upstream `soundtouch-service` binary
+- Removed inherited upstream container entrypoint behavior from the add-on image
+- Switched option loading to Home Assistant's documented `bashio::config` pattern
+
+## 0.72.0-10
+
+- Switched the wrapper to a new startup path and `CMD`-based launch to align better with Home Assistant app examples
+- Added a startup banner so the running image version is visible immediately in add-on logs
+
 ## 0.72.0-9
 
 - Renamed the Home Assistant wrapper version back into the `0.72.x` line
