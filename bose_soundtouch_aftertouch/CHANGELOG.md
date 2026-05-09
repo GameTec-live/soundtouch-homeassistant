@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.72.0-2
+
+- Fixed Home Assistant `webui` placeholder syntax so Supervisor accepts the app metadata
+- Removed deprecated 32-bit Home Assistant architectures from the published app manifest
+
 ## 0.72.0-1
 
 - Rebased the add-on wrapper onto upstream Bose SoundTouch `v0.72.0`
